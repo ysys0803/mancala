@@ -247,7 +247,7 @@
                         if (turn != 3){
                             var result = window.confirm(diff+'ポイントであなたの勝利です！結果をツイートしますか？');
                             if( result ) {
-                                var tw_contents = ("クソ雑魚アルゴリズムに"+diff+"ポイントで勝利！");
+                                var tw_contents = "クソ雑魚アルゴリズムに"+diff+"ポイントで勝利！";
                                 var url = "https://ysys0803.github.io/mancala/";
                                 window.open().location.href = ("https://twitter.com/share?url=" + url + "&text=" + tw_contents + "&count=none&lang=ja");
                             }
@@ -277,7 +277,7 @@
                             if (turn != 3){
                                 var result = window.confirm(diff+'ポイントで相手の勝利です...結果をツイートしますか？');
                                 if( result ) {
-                                    var tw_contents = ("クソ雑魚アルゴリズムに"+diff+"ポイントで敗戦.....");
+                                    var tw_contents = "クソ雑魚アルゴリズムに"+diff+"ポイントで敗北.....";
                                     var url = "https://ysys0803.github.io/mancala/";
                                     window.open().location.href = ("https://twitter.com/share?url=" + url + "&text=" + tw_contents + "&count=none&lang=ja");
                                 }
