@@ -1,0 +1,81 @@
+.middle{
+    font-size: 20px;
+    background-color: lightcyan;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+}
+
+.text{
+    font-size: 16px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.field {
+    background-color: lightgreen;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}
+
+.arrow {
+    font-size: 30px;
+}
+
+.flex{
+    display: flex;
+}
+
+.box {
+    color: #888888;
+    font-size: 20px;
+    border: solid 3px #000000;
+    background-color: #cccccc;
+    width: 54px;
+    padding-top: 7px; 
+    padding-bottom: 7px; 
+    border-radius: 10px;
+    }
+
+.enemy {
+    border: solid 3px #ff0000;
+    }
+
+button {
+    font-size: 20px;
+    border: solid 3px #0000ff;
+    background-color: #cccccc;
+    width: 60px;
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    border-radius: 10px;
+    }
+
+button.long {
+    color: #ffffff;
+    border: solid 2px #000000;
+    background-color: orange;
+    width: 180px;
+    font-weight: 700;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+#foward {
+    color: #ffffff;
+    border: solid 2px #000000;
+    background-color: #0000ff;
+    width: 90px;
+    font-weight: 700;
+    float: left;
+    }
+
+.twitter-share-button {
+    padding: 24px 0px 0px 0px;
+    float: right;
+    }
