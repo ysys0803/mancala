@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>マンカラ</title>
+        <link href="game.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="middle">
+            <font size="6">マンカラ</font>
+            <div class="field">
+                <div>&ensp;&ensp;⑬&ensp;&ensp;&ensp;&ensp;⑫&ensp;&ensp;&ensp;&ensp;⑪&ensp;&ensp;&ensp;&ensp;⑩&ensp;&ensp;&ensp;&ensp;⑨&ensp;&ensp;&ensp;&ensp;⑧&ensp;&ensp;</div>
+                <div class="flex">&ensp;&ensp;
+                    <div class="box enemy">
+                        <div style="text-align:center;">
+                            <span id="num13">3</span>
+                        </div>
+                    </div>
+                    <div class="box enemy">
+                        <div style="text-align:center;">
+                            <span id="num12">3</span>
+                        </div>
+                    </div>
+                    <div class="box enemy">
+                        <div style="text-align:center;">
+                            <span id="num11">3</span>
+                        </div>
+                    </div>
+                    <div class="box enemy">
+                        <div style="text-align:center;">
+                            <span id="num10">3</span>
+                        </div>
+                    </div>
+                    <div class="box enemy">
+                        <div style="text-align:center;">
+                            <span id="num9">3</span>
+                        </div>
+                    </div>
+                    <div class="box enemy">
+                        <div style="text-align:center;">
+                            <span id="num8">3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex">&ensp;&ensp;
+                    <div class="box">
+                        <div style="text-align:center;">
+                            <span id="num0">0</span>
+                        </div>
+                    </div>
+                    <div class="arrow">↓&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;↑</div>
+                    <div class="box">
+                        <div style="text-align:center;">
+                            <span id="num7">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex">&ensp;&ensp;
+                    <button type="button" id="N1" onclick="buttonClick1()" disabled>
+                        <div style="text-align:center;">
+                            <span id="num1">3</span>
+                        </div>
+                    </button>
+                    <button type="button" id="N2" onclick="buttonClick2()" disabled>
+                        <div style="text-align:center;">
+                            <span id="num2">3</span>
+                        </div>
+                    </button>
+                    <button type="button" id="N3" onclick="buttonClick3()" disabled>
+                        <div style="text-align:center;">
+                            <span id="num3">3</span>
+                        </div>
+                    </button>
+                    <button type="button" id="N4" onclick="buttonClick4()" disabled>
+                        <div style="text-align:center;">
+                            <span id="num4">3</span>
+                        </div>
+                    </button>
+                    <button type="button" id="N5" onclick="buttonClick5()" disabled>
+                        <div style="text-align:center;">
+                            <span id="num5">3</span>
+                        </div>
+                    </button>
+                    <button type="button" id="N6" onclick="buttonClick6()" disabled>
+                        <div style="text-align:center;">
+                            <span id="num6">3</span>
+                        </div>
+                    </button>
+                </div>
+                <div>&ensp;&ensp;①&ensp;&ensp;&ensp;&ensp;②&ensp;&ensp;&ensp;&ensp;③&ensp;&ensp;&ensp;&ensp;④&ensp;&ensp;&ensp;&ensp;⑤&ensp;&ensp;&ensp;&ensp;⑥&ensp;&ensp;</div>
+            </div>
+
+            <span id="now">- </span>番の駒を移動しました<br><br>
+
+            <span id="comment">先攻/後攻を選び、ボタンを押してゲームスタート！</span><br>
+            <div class="flex">
+                <button type="button" id="foward" onclick="foward()">
+                    <div style="text-align:center;">
+                        <span id="fow">先攻</span>
+                    </div>
+                </button>
+                <button type="button" class="long" onclick="start()">
+                    <div style="text-align:center;">
+                        GAME START
+                    </div>
+                </button>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="マンカラをプレイ中" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+
+            <script>
+                var mat = [0,3,3,3,3,3,3,0,3,3,3,3,3,3];
+                var checkmat = "C33333";
+                var turn = 1;
+                var now = 0;
+                var tmp = 0;
+                var counter = 0;
+                var point = -999;
+                var tmppoint = -999;
+                var diff = 0;
+                var F = 1;
+                var element;
+                var timerid;
+
+                function foward(){
+                    F = (F+1)%2;
+                    if (F == 1){
+                        document.getElementById('foward').style.backgroundColor = "#0000ff";
+                        document.getElementById("fow").innerHTML = "先攻";
+                    }
+                    else{
+                        document.getElementById('foward').style.backgroundColor = "#ff0000";
+                        document.getElementById("fow").innerHTML = "後攻";
+                    }
+                }
+
+                function able(){
+                    if(mat[1]>0){
+                        element = document.getElementById("N1");
+                        element.disabled = false;
+                    }
+                    if(mat[2]>0){
+                        element = document.getElementById("N2");
+                        element.disabled = false;
+                    }
+                    if(mat[3]>0){
+                        element = document.getElementById("N3");
+                        element.disabled = false;
+                    }
+                    if(mat[4]>0){
+                        element = document.getElementById("N4");
+                        element.disabled = false;
+                    }
+                    if(mat[5]>0){
+                        element = document.getElementById("N5");
+                        element.disabled = false;
+                    }
+                    if(mat[6]>0){
+                        element = document.getElementById("N6");
+                        element.disabled = false;
+                    }
+                }
+
+                function disable(){
+                    element = document.getElementById("N1");
+                    element.disabled = true;
+                    element = document.getElementById("N2");
+                    element.disabled = true;
+                    element = document.getElementById("N3");
+                    element.disabled = true;
+                    element = document.getElementById("N4");
+                    element.disabled = true;
+                    element = document.getElementById("N5");
+                    element.disabled = true;
+                    element = document.getElementById("N6");
+                    element.disabled = true;
+                }
+
+                function rewrite(){
+                    document.getElementById("num0").innerHTML = mat[0];
+                    document.getElementById("num1").innerHTML = mat[1];
+                    document.getElementById("num2").innerHTML = mat[2];
+                    document.getElementById("num3").innerHTML = mat[3];
+                    document.getElementById("num4").innerHTML = mat[4];
+                    document.getElementById("num5").innerHTML = mat[5];
+                    document.getElementById("num6").innerHTML = mat[6];
+                    document.getElementById("num7").innerHTML = mat[7];
+                    document.getElementById("num8").innerHTML = mat[8];
+                    document.getElementById("num9").innerHTML = mat[9];
+                    document.getElementById("num10").innerHTML = mat[10];
+                    document.getElementById("num11").innerHTML = mat[11];
+                    document.getElementById("num12").innerHTML = mat[12];
+                    document.getElementById("num13").innerHTML = mat[13];
+                    document.getElementById("now").innerHTML = now;
+                }
+
+                function start(){
+                    turn = 1;
+                    now = "- ";
+                    tmp = 0;
+                    counter = 0;
+                    point = -999;
+                    tmppoint = -999;
+                    diff = 0;
+                    mat = [0,3,3,3,3,3,3,0,3,3,3,3,3,3];
+                    rewrite();
+                    element = document.getElementById("foward");
+                    element.disabled = true;
+                    if (F == 1){
+                        var elements = document.getElementsByClassName('box');
+                        for(i=0;i<elements.length;i++){
+                            elements[i].style.color = "#000000";
+                            }
+                        document.getElementById("comment").innerHTML = "あなたの番です";
+                        document.getElementById("now").innerHTML = "- ";
+                        able();
+                    }
+                    else{
+                        document.getElementById("comment").innerHTML = "相手の番です";
+                        document.getElementById("now").innerHTML = "- ";
+                        enemyturn();
+                    }
+                }
+
+                function sleep(time) {
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            resolve();
+                        }, time);
+                    });
+                }
+
+                function wincheck(){
+                    var flag = 1;
+                    rewrite();
+                    for(let i = 1; i <= 6; i++){
+                        if(mat[i] > 0){
+                            flag = 0;
+                        }
+                    }
+                    if(flag == 1){
+                        diff = 0;
+                        for(let i = 8; i <= 13; i++){
+                            diff = diff+mat[i];
+                        }
+                        if (turn != 3){
+                            var result = window.confirm(diff+'ポイントであなたの勝利です！結果をツイートしますか？');
+                            if( result ) {
+                                var tw_contents = ("クソ雑魚アルゴリズムに"+diff+"ポイントで勝利！");
+                                var url = "https://ysys0803.github.io/webpage_test/";
+                                window.open().location.href = ("https://twitter.com/share?url=" + url + "&text=" + tw_contents + "&count=none&lang=ja");
+                            }
+                        }
+                        turn = 3;
+                        document.getElementById("comment").innerHTML = "あなたの勝利です！";
+                        disable();
+                        element = document.getElementById("foward");
+                        element.disabled = false;
+                    }
+                }
+
+                function losecheck(){
+                    var flag = 1;
+                    rewrite();
+                    for(let i = 8; i <= 13; i++){
+                        if(mat[i] > 0){
+                            flag = 0;
+                        }
+                    }
+                    if(flag == 1){
+                        if (turn != 3){
+                            diff = 0;
+                            for(let i = 1; i <= 6; i++){
+                                diff = diff+mat[i];
+                            }
+                            if (turn != 3){
+                                var result = window.confirm(diff+'ポイントで相手の勝利です...結果をツイートしますか？');
+                                if( result ) {
+                                    var tw_contents = ("クソ雑魚アルゴリズムに"+diff+"ポイントで敗戦.....");
+                                    var url = "https://ysys0803.github.io/webpage_test/";
+                                    window.open().location.href = ("https://twitter.com/share?url=" + url + "&text=" + tw_contents + "&count=none&lang=ja");
+                                }
+                            }
+                        }
+                        turn = 2;
+                        document.getElementById("comment").innerHTML = "相手の勝利です";
+                        disable();
+                        element = document.getElementById("foward");
+                        element.disabled = false;
+                    }
+                }
+
+                function enemyturn(){
+                    point = -999;
+                    tmppoint = -999;
+                    tmp = 0;
+                    counter = 7;
+                    var timerid2;
+                    timerid2 = setInterval(function(){
+                        tmppoint = 0;
+                        counter++;
+                        tmppoint = mat[counter] - counter;
+                        if (mat[counter]%7 + counter == 13){
+                            tmppoint = -99;
+                        }
+                        checkmat = "C"+mat[1]+mat[2]+mat[3]+mat[4]+mat[5];
+                        if (checkmat == "C00000" || checkmat == "C00002" || checkmat == "C00009" || checkmat == "00031" || checkmat == "C00038" || checkmat == "C00420" || checkmat == "C00427" || checkmat == "C00490" || checkmat == "C00497"){
+                            tmppoint = mat[counter] + counter;
+                        }
+                        if (mat[counter]%7 + counter == 14){
+                            tmppoint = 100*counter;
+                        }
+                        if (mat[counter] == 0){
+                            tmppoint = -999;
+                        }
+                        if (tmppoint >= point){
+                            point = tmppoint;
+                            tmp = counter;
+                        }
+                        if (counter >= 13){
+                            clearInterval(timerid2);
+                            now = tmp;
+                            num = mat[tmp];
+                            enemymove();
+                        }
+                        rewrite();
+                    }, 100);
+                }
+
+                function mymove(){
+                    now = tmp;
+                    counter = 0;
+                    var elements = document.getElementsByClassName('box');
+                    for(i=0;i<elements.length;i++){
+                        elements[i].style.color = "#888888";
+                    }
+                    if (turn <= 1){
+                        document.getElementById("comment").innerHTML = "駒を移動中.....";
+                    }
+                    timerid = setInterval(function(){
+                        counter++;
+                        tmp++
+                        if(tmp >= 14){
+                            tmp = 0
+                        }
+                        mat[tmp]++
+                        mat[now]--
+                        rewrite();
+                        if (counter >= num){
+                            clearInterval(timerid);
+                            elements = document.getElementsByClassName('box');
+                            wincheck();
+                            if(tmp == 0 || tmp == 7){
+                                if (turn <= 1){
+                                    elements = document.getElementsByClassName('box');
+                                    for(i=0;i<elements.length;i++){
+                                        elements[i].style.color = "#000000";
+                                    }
+                                    document.getElementById("comment").innerHTML = "あなたの番です";
+                                    turn = 1;
+                                    able();
+                                }
+                            }
+                            else{
+                                if (turn <= 1){
+                                    document.getElementById("comment").innerHTML = "相手の番です";
+                                    turn = 0;
+                                    disable();
+                                    rewrite();
+                                    enemyturn();
+                                }
+                            }
+                        }
+                    }, 300);
+                    rewrite();
+                }
+
+                function enemymove(){
+                    now = tmp;
+                    counter = 0;
+                    if (turn <= 1){
+                        document.getElementById("comment").innerHTML = "駒を移動中.....";
+                    }
+                    timerid = setInterval(function(){
+                        counter++;
+                        tmp++
+                        if(tmp >= 14){
+                            tmp = 0
+                        }
+                        mat[tmp]++
+                        mat[now]--
+                        rewrite();
+                        if (counter >= num){
+                            clearInterval(timerid);
+                            losecheck();var elements = document.getElementsByClassName('box');
+                            if(tmp == 0 || tmp == 7){
+                                if (turn <= 1){
+                                    document.getElementById("comment").innerHTML = "相手が考え中.....";
+                                    turn = 0;
+                                    enemyturn();
+                                }
+                            }
+                            else{
+                                elements = document.getElementsByClassName('box');
+                                for(i=0;i<elements.length;i++){
+                                    elements[i].style.color = "#000000";
+                                }
+                                if (turn <= 1){
+                                    document.getElementById("comment").innerHTML = "あなたの番です";
+                                    able();
+                                    turn = 1;
+                                }
+                            }
+                        }
+                    }, 300);
+                    rewrite();
+                }
+
+                function buttonClick1(){
+                    disable()
+                    tmp = 1;
+                    num = mat[1];
+                    mymove();
+                }
+                function buttonClick2(){
+                    disable()
+                    tmp = 2;
+                    num = mat[2];
+                    mymove();
+                }
+                function buttonClick3(){
+                    disable()
+                    tmp = 3;
+                    num = mat[3];
+                    mymove();
+                }
+                function buttonClick4(){
+                    disable()
+                    tmp = 4;
+                    num = mat[4];
+                    mymove();
+                }
+                function buttonClick5(){
+                    disable()
+                    tmp = 5;
+                    num = mat[5];
+                    mymove();
+                }
+                function buttonClick6(){
+                    disable()
+                    tmp = 6;
+                    num = mat[6];
+                    mymove();
+                }          
+            </script>
+        </div>
+        <div class="text"><br><br>
+            <p align="center">～　ルール説明　～</p>
+            <p align="center">マスにある駒を移動し、先に全ての自分のマスの駒を無くした方が勝ち</p>
+            <p align="center">＜自分のマス:青 / 相手のマス:赤 / ゴール:黒 (マスに書かれた数字:駒の数)＞</p>
+            <p align="center">自分の番になったら駒の置かれた自分のマスを１つ選び、そのマスにある駒を全て取って１つずつ次のマスに置いていく（反時計回り）</p>
+            <p align="center">最後に駒を置いたマスがゴールの場合はもう一度自分の番、それ以外のマスの場合は相手の番になる</p>
+            <p align="center">勝った時、相手のマスに残っている駒の合計がポイントとなる</p>
+            <p align="center">このページの製作者のサイトは<a href= "https://ysys0803.github.io/webpage_test/" >&ensp;こちら&ensp;</a></p>
+        </div>
+    </body>
+</html>
